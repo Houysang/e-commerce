@@ -1,79 +1,106 @@
-<script setup lang="ts">
-import { RouterView } from 'vue-router'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <p>This is my first Vuejs project</p>
+  <div id="app">
+    <div class="category-list">
+      <categoryComponent
+        v-for="(category, index) in categories"
+        :key="index"
+        :image="category.image"
+        :title="category.title"
+        :item="category.itemCount"
+      />
     </div>
-  </header>
 
-  <RouterView />
+    <div class="promotion-list">
+      <promotionComponent
+        v-for="(promotion, index) in promotions"
+        :key="index"
+        :title="promotion.title"
+        :image="promotion.image"
+        :buttonText="promotion.buttonText"
+        :buttonColor="promotion.buttonColor"
+      />
+    </div>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<script lang="ts">
+import categoryComponent from './components/categoryComponent.vue';
+import promotionComponent from './components/promotionComponent.vue';
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+export default {
+  name: 'App',
+  components: {
+    categoryComponent,
+    promotionComponent,
+  },
+  data() {
+    return {
+      categories: [
+        { image: 'public/images/burger.png', title: 'Cake & Milk', itemCount: 14},
+        { image: 'public/images/peach.png', title: 'Peach', itemCount: 17 },
+        { image: 'public/images/kiwi.png', title: 'Oganic Kiwi', itemCount: 21 },
+        { image: 'public/images/apple.png', title: 'Red Apple', itemCount: 68 },
+        { image: 'public/images/snack.png', title: 'Snack', itemCount: 34 },
+        { image: 'public/images/bluePlum.png', title: 'Black plum', itemCount: 25 },
+        { image: 'public/images/vegetable.png', title: 'Vegetables', itemCount: 65 },
+        { image: 'public/images/headphone.png', title: 'Headphone', itemCount: 33 },
+        { image: 'public/images/cake.png', title: 'Cake & Milk', itemCount: 54 },
+        { image: 'public/images/orange.png', title: 'Orange', itemCount: 63 },
+      ],
+      promotions: [
+        {
+          title: 'Everyday Fresh & Clean with Our Products',
+          image: 'public/images/promotion1.png',
+          buttonText: 'Shop Now ➜',
+          buttonColor: '#3BB77E',
+          backgroundColor: '#F0E8D5',
+        },
+        {
+          title: 'Make your Breakfast Healthy and Easy',
+          image: 'public/images/promotion2.png',
+          buttonText: 'Shop Now ➜',
+          buttonColor: '#3BB77E',
+          backgroundColor: '#F3E8E8',
+        },
+        {
+          title: 'The best Organic Products Online',
+          image: 'public/images/promotion3.png',
+          buttonText: 'Shop Now ➜',
+          buttonColor: '#FDC040',
+          backgroundColor: '#E7EAF3',
+        },
+      ],
+    };
+  },
+};
+</script>
 
-nav {
-  width: 100%;
-  font-size: 12px;
+<style>
+#app {
+  font-family: Arial, sans-serif;
   text-align: center;
-  margin-top: 2rem;
+  padding: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+.category-list {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 40px;
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
+.promotion-list {
+  display: flex;
+  gap: 15px;
+  margin-top: 40px;
 }
 
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
+/* .promotionComponent {
+  width: 350px; 
+  max-width: 90%;
+  box-sizing: border-box;
+} */
 </style>
