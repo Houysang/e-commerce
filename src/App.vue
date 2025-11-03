@@ -18,6 +18,7 @@
         :image="promotion.image"
         :buttonText="promotion.buttonText"
         :buttonColor="promotion.buttonColor"
+        :backgroundColor="promotion.backgroundColor"
       />
     </div>
   </div>
@@ -36,7 +37,7 @@ export default {
   data() {
     return {
       categories: [
-        { image: 'public/images/burger.png', title: 'Cake & Milk', itemCount: 14},
+        { image: 'public/images/burger.png', title: 'Cake & Milk', itemCount: 14 },
         { image: 'public/images/peach.png', title: 'Peach', itemCount: 17 },
         { image: 'public/images/kiwi.png', title: 'Oganic Kiwi', itemCount: 21 },
         { image: 'public/images/apple.png', title: 'Red Apple', itemCount: 68 },
