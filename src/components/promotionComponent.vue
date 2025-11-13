@@ -1,10 +1,10 @@
 <template>
-    <div class="promotionComponent" :style="{backgroundColor: backgroundColor}">
+    <div class="promotionComponent" :style="{backgroundColor: color}">
         <div class="promotionComponent-text">
             <h2>{{ title }}</h2>
             <button-component :text="buttonText" :color="buttonColor" @click="shopNow"/>
         </div>
-        <img :src="image" alt="title" class="promotion-image"/>
+        <img :src="image" :alt="title" class="promotion-image"/>
     </div>
 </template>
 
@@ -19,10 +19,7 @@ export default {
         image: String,
         buttonText: String,
         buttonColor: String,
-        backgroundColor: {
-            type: String,
-            default: '#FFFCEB',
-        }
+        color: String,
     },
     methods: {
         shopNow() {
@@ -36,33 +33,33 @@ export default {
     .promotionComponent{
         width: 512px;
         height: 300px;
-        background: #FFFCEB;
+        /* background-color: #FFFCEB; */
         border-radius: 12px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 20px;
+        padding: 20px;
         box-sizing: border-box;
     }
     
     .promotionComponent-text {
         z-index: 1;
-        max-width: 50%;
+        max-width: 90%;
         text-align: left;
 }
 
 
     .promotionComponent-text h2{
         margin: 0 0 15px 0;
-        font-size: 22px;
+        font-size: 24px;
         font-family: 'Times New Roman', Times, serif;
         font-weight: bold;
     }
 
     .promotion-image{
-        width: 220px;
+        width: 300px;
         height: auto;
         object-fit: contain;
-        max-height: 180px; /* Prevents tall images from stretching card */
+        max-height: 250px; 
     }
 </style>

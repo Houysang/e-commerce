@@ -1,8 +1,8 @@
 <template>
-    <div class="category-card">
+    <div class="category-card" :style="{backgroundColor: color}">
         <img :src="image" alt="title" class="category-image"/>
-        <h4>{{title}}</h4>
-        <p>{{item}}items</p>
+        <h4>{{name}}</h4>
+        <p>{{productCount}} items</p>
     </div>
 </template>
 
@@ -11,8 +11,9 @@ export default {
     name: 'categoryComponent',
     props: {
         image: String,
-        title: String,
-        item: Number,
+        name: String,
+        productCount: Number,
+        color: String,
     },
 }
 </script>
@@ -24,10 +25,11 @@ export default {
         text-align: center;
         font-family: 'Times New Roman', sans-serif;
         padding: 3px;
-        background: #FFFCEB;
-        border-style: solid;
-        border-color: #81B13D;
+        /* background: #FFFCEB; */
+        /* border-style: solid; */
+        /* border-color: #81B13D; */
         border-radius: 10px;
+        border: 3px solid #81B13D;
     }
 
     .category-image{

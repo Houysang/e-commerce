@@ -1,79 +1,98 @@
 <template>
   <div id="app">
     <div class="category-list">
-      <categoryComponent
-        v-for="(category, index) in categories"
-        :key="index"
-        :image="category.image"
-        :title="category.title"
-        :item="category.itemCount"
-      />
-    </div>
-
-    <div class="promotion-list">
-      <promotionComponent
-        v-for="(promotion, index) in promotions"
-        :key="index"
-        :title="promotion.title"
-        :image="promotion.image"
-        :buttonText="promotion.buttonText"
-        :buttonColor="promotion.buttonColor"
-        :backgroundColor="promotion.backgroundColor"
-      />
-    </div>
+        <categoryComponent
+          v-for="(category, index) in categories"
+          :key="index"
+          :image="getImageUrl(category.image)"
+          :name="category.name"
+          :productCount="category.productCount"
+          :color="category.color"
+        />
+      </div>
+  
+      <div class="promotion-list">
+        <promotionComponent
+          v-for="(promotion, index) in promotions"
+          :key="index"
+          :title="promotion.title"
+          :image="getImageUrl(promotion.image)"
+          :buttonText="promotion.buttonText"
+          :buttonColor="promotion.buttonColor"
+          :color="promotion.color"
+        />
+      </div>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import categoryComponent from './components/categoryComponent.vue';
 import promotionComponent from './components/promotionComponent.vue';
 
-export default {
-  name: 'App',
-  components: {
-    categoryComponent,
-    promotionComponent,
-  },
-  data() {
-    return {
-      categories: [
-        { image: 'public/images/burger.png', title: 'Cake & Milk', itemCount: 14 },
-        { image: 'public/images/peach.png', title: 'Peach', itemCount: 17 },
-        { image: 'public/images/kiwi.png', title: 'Oganic Kiwi', itemCount: 21 },
-        { image: 'public/images/apple.png', title: 'Red Apple', itemCount: 68 },
-        { image: 'public/images/snack.png', title: 'Snack', itemCount: 34 },
-        { image: 'public/images/bluePlum.png', title: 'Black plum', itemCount: 25 },
-        { image: 'public/images/vegetable.png', title: 'Vegetables', itemCount: 65 },
-        { image: 'public/images/headphone.png', title: 'Headphone', itemCount: 33 },
-        { image: 'public/images/cake.png', title: 'Cake & Milk', itemCount: 54 },
-        { image: 'public/images/orange.png', title: 'Orange', itemCount: 63 },
-      ],
-      promotions: [
-        {
-          title: 'Everyday Fresh & Clean with Our Products',
-          image: 'public/images/promotion1.png',
-          buttonText: 'Shop Now ➜',
-          buttonColor: '#3BB77E',
-          backgroundColor: '#F0E8D5',
-        },
-        {
-          title: 'Make your Breakfast Healthy and Easy',
-          image: 'public/images/promotion2.png',
-          buttonText: 'Shop Now ➜',
-          buttonColor: '#3BB77E',
-          backgroundColor: '#F3E8E8',
-        },
-        {
-          title: 'The best Organic Products Online',
-          image: 'public/images/promotion3.png',
-          buttonText: 'Shop Now ➜',
-          buttonColor: '#FDC040',
-          backgroundColor: '#E7EAF3',
-        },
-      ],
-    };
-  },
-};
+import axios from 'axios';
+import {ref, onMounted} from 'vue';
+
+// Interfaces
+interface categoryComponent {
+  id?: number
+  name: string
+  url: string
+  productCount: number
+  color: string
+  image: string
+}
+
+interface promotionComponent {
+  id: number
+  title: string
+  color: string
+  image: string
+  url: string
+  buttonText: string
+  buttonColor: string
+}
+
+// Reactive variables
+const categories = ref<categoryComponent[]>([])
+const promotions = ref<promotionComponent[]>([])
+
+const API_BASE_URL = 'http://localhost:3000'
+
+const getImageUrl = (imagePath: string | undefined) => {
+  if (!imagePath) {
+    return 'https://via.placeholder.com/300x200?text=No+Image'
+  }
+  if (imagePath.startsWith('http')) {
+    return imagePath
+  }
+  return `${API_BASE_URL}${imagePath.startsWith('/') ? '' : '/'}${imagePath}`
+}
+
+const fetchProducts = async () => {
+  try {
+    const response = await axios.get<categoryComponent[]>('http://localhost:3000/api/categories')
+    console.log('Categories API Response:', response.data)
+    categories.value = response.data
+  } catch (error) {
+    console.error('Error fetching products:', error)
+  }
+}
+
+const fetchPromotions = async () => {
+  try {
+    const response = await axios.get<promotionComponent[]>('http://localhost:3000/api/promotions')
+    console.log('Promotions API Response:', response.data)
+    promotions.value = response.data
+  } catch (error) {
+    console.error('Error fetching promotions:', error)
+  }
+}
+
+onMounted(() => {
+  fetchProducts()
+  fetchPromotions()
+})
+
 </script>
 
 <style>
@@ -95,8 +114,8 @@ export default {
 
 .promotion-list {
   display: flex;
-  gap: 15px;
-  margin-top: 40px;
+  gap: 20px;
+  margin-top: 50px;
 }
 
 /* .promotionComponent {
