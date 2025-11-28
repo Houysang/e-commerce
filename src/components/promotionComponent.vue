@@ -31,7 +31,7 @@ export default {
 
 <style>
     .promotionComponent{
-        width: 512px;
+        width: 500px;
         height: 300px;
         /* background-color: #FFFCEB; */
         border-radius: 12px;

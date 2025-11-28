@@ -1,10 +1,16 @@
 <template>
   <div id="app">
-    <!-- CATEGORY LIST -->
+    <!-- Featured Categories Header + Tabs -->
+    <menuComponent
+      title="Featured Categories"
+      @update:group="selectGroup = $event"
+    />
+
+    <!-- Category Cards -->
     <div class="category-list">
       <categoryComponent
-        v-for="(category, index) in productStore.categories"
-        :key="index"
+        v-for="category in productStore.categories"
+        :key="category.id"
         :image="getImageUrl(category.image)"
         :name="category.name"
         :productCount="category.productCount"
@@ -12,11 +18,11 @@
       />
     </div>
 
-    <!-- PROMOTION LIST -->
+    <!-- Promotion Banners -->
     <div class="promotion-list">
       <promotionComponent
-        v-for="(promotion, index) in productStore.promotions"
-        :key="index"
+        v-for="promotion in productStore.promotions"
+        :key="promotion.id"
         :title="promotion.title"
         :image="getImageUrl(promotion.image)"
         :buttonText="promotion.buttonText"
@@ -24,54 +30,64 @@
         :color="promotion.color"
       />
     </div>
+
+    <!-- Popular Products Header + Tabs -->
+    <menuComponent
+      title="Popular Products"
+      @update:group="selectGroup = $event"
+    />
+
+    <!-- 5. GROUPS SECTION -->
+    <section class="groups">
+      <div
+        class="group-card"
+        v-for="grp in productStore.groups"
+        :key="grp.id"
+      >
+        <h3>{{ grp.name }}</h3>
+      </div>
+    </section>
+
+    <!-- Product Grid -->
+    <section class="products">
+      <productComponent
+        v-for="prod in productStore.products"
+        :key="prod.id"
+        :product="prod"
+      />
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import categoryComponent from './components/categoryComponent.vue'
-import promotionComponent from './components/promotionComponent.vue'
-import { onMounted } from 'vue'
-import { useProductStore } from './stores/productStore'
+import { ref, onMounted } from 'vue';
+import { useProductStore } from './stores/productStore';
 
-// Interfaces for type safety
-interface categoryComponent {
-  id?: number
-  name: string
-  group?: string
-  productCount: number
-  color: string
-  image: string
-}
+import menuComponent from './components/menuComponent.vue';
+import categoryComponent from './components/categoryComponent.vue';
+import promotionComponent from './components/promotionComponent.vue';
+import productComponent from './components/productComponent.vue';
 
-interface promotionComponent {
-  id: number
-  title: string
-  color: string
-  image: string
-  buttonText: string
-  buttonColor: string
-}
+const productStore = useProductStore();
+const selectGroup = ref('All');
 
-// Pinia store
-const productStore = useProductStore()
-
-// Image URL helper
-const API_BASE_URL = 'http://localhost:3000'
+const API_BASE_URL = 'http://localhost:3000';
 const getImageUrl = (imagePath: string | undefined) => {
-  if (!imagePath) return 'https://via.placeholder.com/300x200?text=No+Image'
-  if (imagePath.startsWith('http')) return imagePath
-  return `${API_BASE_URL}/${imagePath}`
-}
+  if (!imagePath) {
+    return 'https://via.placeholder.com/300x200?text=No+Image';
+  }
+  return imagePath.startsWith('http') ? imagePath : `${API_BASE_URL}/${imagePath}`;
+};
 
 // Load all data from store action
 onMounted(async () => {
-  await productStore.loadAllData()
-})
+  await productStore.loadAllData();
+});
 </script>
 
 <style>
 #app {
-  font-family: Arial, sans-serif;
+  font-family: 'Times New Roman', Times, serif;
   text-align: center;
   padding: 20px;
   margin-bottom: 10px;
@@ -80,15 +96,34 @@ onMounted(async () => {
   align-items: center;
 }
 
-.category-list {
+.category-list,
+.promotion-list,
+.products {
   display: flex;
-  gap: 15px;
-  margin-bottom: 40px;
+  gap: 10px;
+  justify-content: center;
+  /* flex-wrap: wrap; */
+  width: 200%;
+  max-width: 1600px;
+  margin: 20px 0 40px;
+  padding: 0 20px;
 }
 
 .promotion-list {
-  display: flex;
   gap: 20px;
-  margin-top: 50px;
+  margin-top: 30px;
 }
+
+.products {
+  gap: 20px;
+  justify-content: flex-start;
+  align-items: stretch;
+  flex-wrap: wrap;
+  margin-bottom: 60px;
+}
+
 </style>
+
+
+
+

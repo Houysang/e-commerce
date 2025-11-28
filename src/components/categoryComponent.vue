@@ -19,6 +19,11 @@ export default {
 </script>
 
 <style>
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
     .category-card{
         width: 137px;
         height: 179px;
