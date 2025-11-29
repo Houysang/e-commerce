@@ -60,6 +60,7 @@ const selectGroup = (groupName: string) => {
   max-width: 1200px;
   margin: 0 auto 24px;
   padding: 0 20px;
+  
 }
 
 .header-row {
