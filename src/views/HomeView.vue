@@ -1,11 +1,12 @@
 <template>
   <div id="app">
     <!-- Featured Categories Header + Tabs -->
+  <div class="menu-section">
     <menuComponent
       title="Featured Categories"
       @update:group="selectGroup = $event"
     />
-
+  </div>
     <!-- Category Cards -->
     <div class="category-list">
       <categoryComponent
@@ -93,7 +94,10 @@ onMounted(async () => {
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+
+  /* REMOVE CENTER ALIGN */
+  text-align: left;
+  align-items: flex-start;
 }
 
 .category-list,
@@ -101,7 +105,7 @@ onMounted(async () => {
 .products {
   display: flex;
   gap: 10px;
-  justify-content: center;
+  justify-content: start;
   /* flex-wrap: wrap; */
   width: 200%;
   max-width: 1600px;
@@ -122,6 +126,12 @@ onMounted(async () => {
   margin-bottom: 60px;
   
 }
+.menu-section {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
 
 </style>
 

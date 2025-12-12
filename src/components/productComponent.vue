@@ -73,7 +73,7 @@ function normalizeImagePath(img) {
 
 const image = computed(() => {
   const clean = normalizeImagePath(props.product.image);
-  if (!clean) return "https://via.placeholder.com/300x200?text=No+Image";
+  if (!clean) return "https://via.placeholder.com/300x200?text=No+Image  ";
   if (clean.startsWith("http")) return clean;
   return `${API_BASE_URL}/${clean}`;
 });
@@ -294,3 +294,4 @@ const decrease = () => { if (qty.value > 0) qty.value--; };
 }
 </style>
 
+productComponent.vue

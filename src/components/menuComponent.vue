@@ -64,6 +64,7 @@ const selectGroup = (groupName: string) => {
 }
 
 .header-row {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -102,4 +103,5 @@ const selectGroup = (groupName: string) => {
   font-weight: bold;
 }
 
-</style>
+
+</style>        

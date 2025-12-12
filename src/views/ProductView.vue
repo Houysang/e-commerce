@@ -1,12 +1,14 @@
 <!-- src/views/ProductView.vue -->
 <template>
   <div class="product">
+    <HeaderComponent />
     <h1>Product Page</h1>
     <p>This is where product details will go.</p>
   </div>
 </template>
 
 <script lang="ts">
+import headerComponent from '../components/headerComponent.vue';
 export default {
   name: "ProductView",
 };

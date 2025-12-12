@@ -55,4 +55,4 @@ export default {
         font-family: 'Times New Roman', Courier, monospace;
         color: #939191;
     }
-</style>
+</style>      
