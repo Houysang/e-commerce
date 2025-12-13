@@ -6,7 +6,7 @@
     </button>
 
     <ul class="menu">
-      <router-link :to="{ path: '/contact' }" class="banner-link">
+      <router-link :to="{ path: '/categories/1' }" class="banner-link">
         <li>🔥 Hot Detail</li>
       </router-link>
 

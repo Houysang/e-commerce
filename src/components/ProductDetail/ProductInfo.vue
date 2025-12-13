@@ -48,7 +48,7 @@ interface Product {
   sku: string;
 }
 
-defineProps<{
+const props = defineProps<{
   product: Product
 }>();
 

@@ -12,11 +12,11 @@
     </button>
 
    <button class="wishlist" title="Wishlist">
-  <img src="/icons/heart.png" alt="Wishlist" />
+  <img src="/header/wishlist.png" alt="Wishlist" />
 </button>
 
 <button class="compare" title="Compare">
-  <img src="/icons/arrow.png" alt="Compare" />
+  <img src="/header/compare.png" alt="Compare" />
 </button>
 
   </div>

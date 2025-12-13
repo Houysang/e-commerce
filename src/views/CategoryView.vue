@@ -10,6 +10,7 @@ import BannerTitle from '../components/Header/BannerTitle.vue'
 
 <style scoped>
 .page-container {
+  width: 100%;
   display: flex;
   justify-self: start;
   flex-direction: column;

@@ -1,6 +1,5 @@
-
 <template>
-  <div class="product-card">
+  <div class="product-card" @click="goToProduct">
     <!-- BADGE -->
     <div v-if="badgeText" class="badge" :class="badgeColor">
       {{ badgeText }}
@@ -28,12 +27,11 @@
       <!-- PRICE + QTY -->
       <div class="price-row">
         <span class="new-price">${{ product.price }}</span>
-
         <span v-if="finalOldPrice" class="old-price">
           ${{ finalOldPrice }}
         </span>
 
-        <button class="btn-add" v-if="qty === 0" @click="increase">
+        <button class="btn-add" v-if="qty === 0" @click.stop="increase">
           Add +
         </button>
 
@@ -51,11 +49,13 @@
 
 <script setup lang="ts">
 import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
 
 const props = defineProps({
   product: Object,
 });
 
+const router = useRouter();
 const API_BASE_URL = "http://localhost:3000";
 
 /* --------------------------
@@ -73,7 +73,7 @@ function normalizeImagePath(img) {
 
 const image = computed(() => {
   const clean = normalizeImagePath(props.product.image);
-  if (!clean) return "https://via.placeholder.com/300x200?text=No+Image  ";
+  if (!clean) return "https://via.placeholder.com/300x200?text=No+Image";
   if (clean.startsWith("http")) return clean;
   return `${API_BASE_URL}/${clean}`;
 });
@@ -86,10 +86,8 @@ const isHot = computed(() => {
 });
 
 const isSale = computed(() => {
-  // Rule: product is on Sale if countSold = 0 OR promotion percentage > 0
   return props.product.countSold === 0 ||
          (!!props.product.promotionAsPercentage && Number(props.product.promotionAsPercentage) > 0);
-
 });
 
 const badgeText = computed(() => {
@@ -108,29 +106,12 @@ const badgeColor = computed(() => {
 });
 
 /* --------------------------
-   OLD PRICE FROM API OR AUTO-CALCULATE
+   OLD PRICE
 --------------------------- */
-// const finalOldPrice = computed(() => {
-//   if (props.product.oldPrice) return props.product.oldPrice;
-
-//   if (props.product.promotionAsPercentage) {
-//     const discount = props.product.promotionAsPercentage;
-//     const price = props.product.price;
-
-//     const calculated = (price / (1 - discount / 100)).toFixed(2);
-//     return calculated;
-//   }
-
-//   return null;
-// });
-
 const finalOldPrice = computed(() => {
-  // Prefer backend oldPrice if available
   if (props.product.oldPrice !== undefined && props.product.oldPrice !== null) {
     return props.product.oldPrice;
   }
-
-  // Always generate an old price (example: +20%)
   const price = props.product.price;
   return (price * 1.116).toFixed(2);
 });
@@ -141,6 +122,13 @@ const finalOldPrice = computed(() => {
 const qty = ref(0);
 const increase = () => qty.value++;
 const decrease = () => { if (qty.value > 0) qty.value--; };
+
+/* --------------------------
+   NAVIGATE TO PRODUCT
+--------------------------- */
+function goToProduct() {
+  router.push(`/products/${props.product.id ?? 1}`);
+}
 </script>
 
 <style scoped>
@@ -154,7 +142,7 @@ const decrease = () => { if (qty.value > 0) qty.value--; };
   position: relative;
   box-sizing: border-box;
   flex: 0 0 calc(20% - 16px);
-  
+  cursor: pointer;
 }
 
 /* BADGE */
@@ -167,7 +155,6 @@ const decrease = () => { if (qty.value > 0) qty.value--; };
   font-size: 12px;
   font-weight: bold;
   border-radius: 4px;
-  
 }
 .badge.green { background-color: #3BB77E; }
 .badge.red { background-color: red; }
@@ -200,7 +187,6 @@ const decrease = () => { if (qty.value > 0) qty.value--; };
 .brand {
   font-family: 'Times New Roman', Times, serif;
   font-size: 15px;
-  /* margin: 0; */
   color: #767676;
 }
 
@@ -294,4 +280,3 @@ const decrease = () => { if (qty.value > 0) qty.value--; };
 }
 </style>
 
-productComponent.vue
