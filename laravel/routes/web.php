@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -29,7 +29,7 @@ Route::controller(ProductController::class)->group(function () {
     Route::delete('/products/{product}', 'destroy')->name('products.destroy');
 });
 
-Route::controller(CategoriesController::class)->group(function () {
+Route::controller(CategoryController::class)->group(function () {
     Route::get('/categories', 'index')->name('categories.index');
     Route::get('/categories/create', 'create')->name('categories.create');
     Route::post('/categories', 'store')->name('categories.store');

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -10,11 +10,11 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // Category Routes
-Route::get('/categories', [CategoriesController::class, 'index']);
-Route::post('/categories', [CategoriesController::class, 'store']);
-Route::get('/categories/{categoryId}', [CategoriesController::class, 'show']);
-Route::patch('/categories/{categoryId}', [CategoriesController::class, 'update']);
-Route::delete('/categories/{categoryId}', [CategoriesController::class, 'destroy']);
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::post('/categories', [CategoryController::class, 'store']);
+Route::get('/categories/{categoryId}', [CategoryController::class, 'show']);
+Route::patch('/categories/{categoryId}', [CategoryController::class, 'update']);
+Route::delete('/categories/{categoryId}', [CategoryController::class, 'destroy']);
 
 // Product Routes
 Route::get('/products', [ProductController::class, 'index']);
@@ -24,4 +24,4 @@ Route::patch('/products/{productId}', [ProductController::class, 'update']);
 Route::delete('/products/{productId}', [ProductController::class, 'destroy']);
 
 // Get all products by category
-Route::get('/categories/{categoryId}/products', [CategoriesController::class, 'products']);
+Route::get('/categories/{categoryId}/products', [CategoryController::class, 'products']);

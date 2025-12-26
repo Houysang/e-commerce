@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categories;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
     // Get all categories
     public function index()
     {
-        $categories = Categories::all();
+        $categories = Category::all();
         return response()->json($categories);
     }
 
@@ -22,21 +22,21 @@ class CategoriesController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        $category = Categories::create($validated);
+        $category = Category::create($validated);
         return response()->json($category, 201);
     }
 
     // Get a single category
     public function show($categoryId)
     {
-        $category = Categories::findOrFail($categoryId);
+        $category = Category::findOrFail($categoryId);
         return response()->json($category);
     }
 
     // Update a category
     public function update(Request $request, $categoryId)
     {
-        $category = Categories::findOrFail($categoryId);
+        $category = Category::findOrFail($categoryId);
         
         $validated = $request->validate([
             'name' => 'sometimes|required|string|max:255',
@@ -50,7 +50,7 @@ class CategoriesController extends Controller
     // Delete a category
     public function destroy($categoryId)
     {
-        $category = Categories::findOrFail($categoryId);
+        $category = Category::findOrFail($categoryId);
         $category->delete();
         return response()->json(['message' => 'Category deleted successfully'], 200);
     }
@@ -58,7 +58,7 @@ class CategoriesController extends Controller
     // Get all products for a specific category
     public function products($categoryId)
     {
-        $category = Categories::findOrFail($categoryId);
+        $category = Category::findOrFail($categoryId);
         $products = $category->products;
         return response()->json($products);
     }
