@@ -39,12 +39,16 @@ Route::post('/login', function (Request $request) {
         return response()->json(['message'=>'Invalid credentials'], 401);
     }
 
-    $user = $request->user();
-    $token = $user->createToken('mobile')->accessToken;
+    $user = Auth::user();
+    $plainTextToken = $user->createToken('api-token')->plainTextToken;
 
-    return response()->json(['token'=>$token]);
+    return response()->json([
+        'token' => $plainTextToken,
+        'user' => $user->only('id', 'name', 'email')
+    ], 200);
 });
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', fn(Request $r) => $r->user()->load('roles'));
+    
 });

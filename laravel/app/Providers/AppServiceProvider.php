@@ -29,7 +29,5 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('products.update', fn($user) => $user->hasPermission('products.update'));
         Gate::define('categories.create', fn($user) => $user->hasPermission('categories.create'));
         Gate::define('categories.update', fn($user) => $user->hasPermission('categories.update'));
-
-        
     }
 }
