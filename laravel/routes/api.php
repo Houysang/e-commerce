@@ -5,6 +5,10 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\AudienceController;
+use App\Http\Controllers\CommentController;
 
 
 Route::get('/user', function (Request $request) {
@@ -52,3 +56,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', fn(Request $r) => $r->user()->load('roles'));
     
 });
+
+
+Route::post('/authors', [AuthorController::class, 'store']);
+Route::post('/articles', [ArticleController::class, 'store']);
+Route::post('/audiences', [AudienceController::class, 'store']);
+Route::post('/subscribe', [AudienceController::class, 'subscribe']);
+Route::post('/comments', [CommentController::class, 'store']);
+
+Route::get('/author/{name}/articles', [AuthorController::class, 'articles']);
+Route::get('/article/{name}/audiences', [ArticleController::class, 'audiences']);
+Route::get('/author/{name}/audiences', [AuthorController::class, 'audiences']);
+Route::get('/audience/{name}/comments', [AudienceController::class, 'comments']);
+Route::get('/comments', [CommentController::class, 'index']);
